@@ -1,5 +1,7 @@
 package org.Tjokro;
 
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Convert;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +23,10 @@ public class Main {
 
         //validList int avec size
 
+
+        int[] nums = {-2, 1, -3, 4, -1, 2, 1, -5, 4};
+
+
 System.out.println(twoSum());
 
         System.out.println(Anagram());
@@ -29,8 +35,8 @@ System.out.println(twoSum());
 
         System.out.println(fizzBuzz(15));
         System.out.println(decrease(20, 3));
-        System.out.println(Parantheses("(}[}()"));
-
+        System.out.println(Parantheses("(){}()"));
+        System.out.println(MaxSubArray(nums));
     }
 
 //method two sum qui retourne un validList de int
@@ -101,16 +107,16 @@ return true;
         for( int i = 0; i < n; i++ ){
 
             if(i % 3 == 0 && i % 5 == 0){
-                System.out.println("FizzBuzz");
+//                System.out.println("FizzBuzz");
                 validList.add("fizzbuzz");
             }else if(i % 3 == 0){
-                System.out.println("Fizz");
+//                System.out.println("Fizz");
                 validList.add("fizz");
             }else if(i % 5 == 0){
-                System.out.println("Buzz");
+//                System.out.println("Buzz");
                 validList.add("buzz");
             }else{
-                System.out.println(i);
+//                System.out.println(i);
                 validList.add(String.valueOf(i));
             }
 
@@ -141,34 +147,80 @@ return validList;
     }
 
 
-    public static List<Character> Parantheses(String s){
+    public static boolean Parantheses(String s){
 
-        List<Character> validList = new ArrayList<>();
+        List<Character> chars = new ArrayList<>();
 
        for(int i = 0; i < s.length(); i++){
 
            char l = s.charAt(i);
 
-           if(l == '(' || l == '{'|| l == '['){
-               validList.add(l);
-           }else{
+           if(l == '(' || l == '{' || l == '['){
 
-               if(validList.isEmpty()){
-                   validList.add(l);
-                   return validList;
-               }
+               chars.add(l);
+           }else  {
+
+               if(chars.isEmpty()) return false;
+
+               var lastopened = chars.remove(chars.size() - 1);
+
+               if(l == ')' && lastopened != '(') return false;
+               if(l == '}' && lastopened != '{') return false;
+               if(l == ']' && lastopened != '[') return false;
            }
 
-           char lastOpened = validList.remove(validList.size() - 1);
 
 
-           if (l == ')' && lastOpened != '(') validList.add(')');
-           if (l == ']' && lastOpened != '[') validList.add(']');
-           if (l == '}' && lastOpened != '{') validList.add('}');
        }
 
+        return chars.isEmpty();
 
-        return validList;
+    }
+
+
+
+    public static int MaxSubArray(int[] list){
+
+
+
+
+        int current = list[0];
+        int max = list[0];
+
+        for(int i = 0; i < list.length; i++){
+
+
+
+          current = Math.max(list[i], current + list[i]);
+
+          max = Math.max(max, current);
+
+
+        }
+
+
+    return max;
+
+    }
+
+
+
+
+    public static List<int> getOneBits(int n)
+    {
+      List<Integer> list = new ArrayList<>();
+
+
+        String numbinary = Convert.ToString(n, 2);
+
+        for(int i =0; i < numbinary.Length; i++){
+
+            if(numbinary[i] == 1){
+                resultList.Add(i);
+            }
+        }
+
+
     }
 
 }
